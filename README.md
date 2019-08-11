@@ -15,17 +15,23 @@ WINHTTP.DLL    WinHttpCrackUrl   WinHttpOpen inHttpGetDefaultProxyConfiguration 
                WinHttpReceiveResponse  WinHttpQueryHeaders  WinHttpReadData  
 
 sppcext.dll
+
 WINSCard.dll
+
 msxml3.dll/msxml6.dll            DllGetClassObject   DllUnregisterServer 
+
 dhcpcsvc6.dll
+
 dhcpcsvc.dll
+
 schannel.dll    SpUserModeInitialize
+
 ncrypt.dll     SslOpenProvider  SslIncrementProviderReferenceCount   SslImportKey  SslLookupCipherSuiteInfo  SslLookupCipherLengths  SslEncryptPacket  SslDecrementProviderReferenceCount SslFreeObject
 
-
-
 bcryptprimitives.dll    GetHashInterface  GetCipherInterface 
+
 userrenv.dll
+
 gpapi.dll
 
 
@@ -33,13 +39,19 @@ sspicli.dll    EnumerateSecurityPackagesW   LsaFreeReturnBuffer   LsaFreeReturnB
                FreeCredentialsHandle 
 
 credssp.dll
+
 secur32.dll
 
 rasadhlp.dll
+
 mskeyprotect.dll
+
 ntasn1.dll
+
 ncryptsslp.dll
+
 dpapi.dll
+
 FWPUCLNT.DLL
 
 crypt32.dll     I_CryptAllocTlsEx   I_CryptAllocTlsEx  CertOpenStore CertAddEncodedCertificateToStore  CryptDecodeObjectEx  CryptEnumOIDFunction I_CryptGetAsn1Decoder  CertAddEncodedCertificateToStore CertFreeCertificateContext 
