@@ -14,7 +14,7 @@ WINHTTP.DLL    WinHttpCrackUrl   WinHttpOpen inHttpGetDefaultProxyConfiguration 
                WinHttpGetProxyForUrl  WinHttpCrackUrl  WinHttpCloseHandle  WinHttpSendRequest  WinHttpAddRequestHeaders   WinHttpCreateUrl   WinHttpSetStatusCallback  WinHttpGetProxyForUrlEx2  WinHttpFreeProxyResultEx
                WinHttpReceiveResponse  WinHttpQueryHeaders  WinHttpReadData  
 
-sppcext.dll
+sppcext.dll    SLActivateProduct
 
 WINSCard.dll
 
