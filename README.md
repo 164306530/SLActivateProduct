@@ -58,6 +58,10 @@ crypt32.dll     I_CryptAllocTlsEx   I_CryptAllocTlsEx  CertOpenStore CertAddEnco
                 CertCloseStore CryptFindOIDInfo CryptEnumOIDFunction  CryptMemFree   CryptHashCertificate2  CertFreeCertificateContext CertOpenStore  CertAddEncodedCertificateToStore  CertSetCertificateContextProperty CertGetCertificateChain
                 CertGetCertificateContextProperty CryptMemFree CertOpenStore CryptEnumOIDFunction I_CryptSetTls CertAddStoreToCollection CertFindCertificateInStore  CertAddSerializedElementToStore  CertDuplicateCertificateContext  
                 CertVerifyCertificateChainPolicy  CryptGetOIDFunctionAddress CryptEnumOIDFunction CertVerifyCertificateChainPolicy CertFindExtension  I_CryptCreateLruCache  
+                
+ws2_32.dll  WSAStartup WahCreateHandleContextTable WahOpenApcHelper  socket WSASocketW WahCreateHandleContextTable WahInsertHandleContext setsockopt WahReferenceContextByHandle WSAIoctl WahReferenceContextByHandle  WSAIoctl closesocket
+            WahReferenceContextByHandle WSACreateEvent  GetAddrInfoExW  WSALookupServiceBeginW  WSALookupServiceEnd ntohs  WSALookupServiceEnd   GetAddrInfoExOverlappedResult  FreeAddrInfoExW setsockopt bind getsockopt  WSCEnumProtocols
+            WSCEnumProtocolsEx  WSCEnumProtocols WSCEnumProtocolsEx WSACloseEvent getpeername WSARecv WSASend 
 
 大致应该是这样(密钥激活过程):加密密钥及硬件等信息，利用httprequest post这些信息到指定网址,如果错误返回错误代码,如果正确返回合法licenseID. 将这些信息存储到SSL Store.Windows调用一系列算法如果该license对应的各种信息是合法就激活系统。crypt32.dll和ncrypt.dll起了关键的作用,如果利用pidgenx.dll解码出密钥SKUID,然后经过crypt32.dll和ncrypt.dll算出加密后的密钥数据(加密后的硬件信息可以固定为某值),然后直接POST这些数据到指定的网址,应该就可以得到错误代码而达到检测密钥的效果,省略了安装激活过程.
 
