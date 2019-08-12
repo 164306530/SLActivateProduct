@@ -4,7 +4,7 @@
 
 hResult = SLActivateProduct(hSLC, bSkuId, null, null, null, null, 0);
 
-![image](https://github.com/laomms/SLActivateProduct/blob/master/22.png)
+![image](https://github.com/laomms/SLActivateProduct/blob/master/00.png)
 
 关联API及函数:
 
