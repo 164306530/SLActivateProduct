@@ -1,10 +1,10 @@
 __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 cbAppSpecificData, __int64 pvAppSpecificData, _DWORD *pActivationInfo, __int64 pwszProxyServer, __int16 wProxyPort)
 {
-  int v7; // er12
+  int V_0; // er12
   __int64 pProductSkuId; // r14
   __int64 hSLC; // r15
   __int64 v10; // rax
-  int v11; // edi
+  int int_0; // edi
   int v12; // eax
   int v13; // er13
   __int64 v14; // rcx
@@ -20,11 +20,11 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   char *v24; // rbx
   unsigned int v25; // edi
   __int64 v26; // rax
-  __int128 *v27; // rdx
+  __int128 *QueryIdType; // rdx
   signed int v28; // eax
-  unsigned int v29; // ebx
+  unsigned int lpDatas; // ebx
   unsigned int v30; // ebx
-  signed int v31; // eax
+  signed int hSLgetSLIDList; // eax
   unsigned int v32; // ebx
   __int64 v33; // rcx
   __int64 v34; // rdx
@@ -33,7 +33,7 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   __int64 v37; // r8
   unsigned int v38; // ebx
   __int64 v39; // rcx
-  signed int v40; // eax
+  signed int hSLIDList; // eax
   unsigned int v41; // ebx
   __int64 v42; // rcx
   unsigned int v43; // ecx
@@ -60,18 +60,18 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   int v65; // [rsp+60h] [rbp-A0h]
   int lpcbData; // [rsp+64h] [rbp-9Ch]
   char pnReturnIds; // [rsp+68h] [rbp-98h]
-  _DWORD *Dst; // [rsp+70h] [rbp-90h]
+  _DWORD *ptr; // [rsp+70h] [rbp-90h]
   __int64 v69; // [rsp+78h] [rbp-88h]
   __int16 v70; // [rsp+80h] [rbp-80h]
   void *Buf1; // [rsp+88h] [rbp-78h]
   __int64 *v72; // [rsp+90h] [rbp-70h]
-  int v73; // [rsp+98h] [rbp-68h]
-  __int64 v74; // [rsp+A0h] [rbp-60h]
+  int int0; // [rsp+98h] [rbp-68h]
+  __int64 eQueryIdTypes; // [rsp+A0h] [rbp-60h]
   __int64 v75; // [rsp+A8h] [rbp-58h]
   __int128 mem_addrs; // [rsp+B0h] [rbp-50h]
   __int64 v77; // [rsp+C0h] [rbp-40h]
-  int v78; // [rsp+C8h] [rbp-38h]
-  int v79; // [rsp+CCh] [rbp-34h]
+  int V_1; // [rsp+C8h] [rbp-38h]
+  int dword_0; // [rsp+CCh] [rbp-34h]
   char lpType; // [rsp+D0h] [rbp-30h]
   char eReturnIdType; // [rsp+D4h] [rbp-2Ch]
   char lpSystemTimeAsFileTime; // [rsp+D8h] [rbp-28h]
@@ -82,35 +82,35 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   int *v87; // [rsp+130h] [rbp+30h]
   __int64 v88; // [rsp+138h] [rbp+38h]
 
-  v7 = 0;
+  V_0 = 0;
   eQueryIdType = 0i64;
   pProductSkuId = ProductSkuId;
   ppReturnIds = 0i64;
   hSLC = SLC;
-  v74 = 0i64;
-  v79 = 0;
+  eQueryIdTypes = 0i64;
+  dword_0 = 0;
   _mm_storeu_si128((__m128i *)&mem_addrs, (__m128i)0i64);
   v77 = 0i64;
   v10 = GetTickCount64(SLC, ProductSkuId, cbAppSpecificData, pvAppSpecificData);
-  v78 = -1;
+  V_1 = -1;
   v75 = v10;
   PHKEY = 0i64;
-  v11 = 0;
+  int_0 = 0;
   if ( !(unsigned int)RegOpenKeyExW(0xFFFFFFFF80000002i64, L"SYSTEM\\Setup", 0i64, 0x20019i64, &PHKEY) )
   {
     lpcbData = 4;
     if ( !(unsigned int)RegQueryValueExW(PHKEY, L"OOBEInProgress", 0i64, &lpType, &lpData, &lpcbData) )
-      LOBYTE(v11) = lpData == 1;
+      LOBYTE(int_0) = lpData == 1;
   }
   sub_7FFC93207F8C(0);
   if ( PHKEY )
     RegCloseKey();
-  v12 = v78;
-  if ( v11 )
+  v12 = V_1;
+  if ( int_0 )
     v12 = 0;
-  v78 = v12;
+  V_1 = v12;
   sub_7FFC93207F8C(0);
-  memset(&Dst, 0, 0x30ui64);
+  memset(&ptr, 0, 0x30ui64);
   v59 = 0;
   v13 = 0;
   UNKNOWNCALL((unsigned int *)&unk_7FFC9326F360, (unsigned int *)&unk_7FFC9327C078);
@@ -118,10 +118,10 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   if ( !hSLC || !pProductSkuId )
     goto LABEL_9;
   v70 = wProxyPort;
-  v72 = &v74;
-  Dst = pActivationInfo;
+  v72 = &eQueryIdTypes;
+  ptr = pActivationInfo;
   v69 = pwszProxyServer;
-  v73 = 0;
+  int0 = 0;
   if ( pActivationInfo )
   {
     if ( *pActivationInfo < 8u )
@@ -139,7 +139,7 @@ LABEL_11:
       sub_7FFC93227294(&unk_7FFC9326F538, &unk_7FFC9327C1A0);
       goto LABEL_9;
     }
-    v16 = sub_7FFC9320AA4C(hSLC, pProductSkuId, &Dst);
+    v16 = sub_7FFC9320AA4C(hSLC, pProductSkuId, &ptr);
     goto LABEL_18;
   }
   hgETSLIDLIST = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
@@ -160,10 +160,10 @@ LABEL_11:
     Buf1 = 0i64;
   }
   sub_7FFC93226C14(&unk_7FFC93270438, &unk_7FFC9327CEC8);
-  v27 = &xmmword_7FFC9325F628;
+  QueryIdType = &xmmword_7FFC9325F628;
   if ( v60 )
-    v27 = eQueryIdType;
-  sub_7FFC93205404(&v74, v27, pProductSkuId, v24, 0i64);
+    QueryIdType = eQueryIdType;
+  sub_7FFC93205404(&eQueryIdTypes, QueryIdType, pProductSkuId, v24, 0i64);
   v57 = v25;
   if ( (v25 & 0x80000000) != 0 )
   {
@@ -173,18 +173,18 @@ LABEL_11:
   if ( Buf1 )
   {
     v28 = sub_7FFC9320567C(Buf1, L"Volume:GVLK");
-    v29 = lpData;
+    lpDatas = lpData;
   }
   else
   {
-    v29 = 0;
+    lpDatas = 0;
     sub_7FFC93207F8C(0);
     v28 = 0;
   }
   v57 = v28;
   if ( v28 < 0 )
     goto LABEL_34;
-  if ( !v29 )
+  if ( !lpDatas )
   {
     if ( Buf1 )
     {
@@ -202,18 +202,18 @@ LABEL_11:
       goto LABEL_34;
     if ( v30 )
     {
-      v7 = 1;
+      V_0 = 1;
       v16 = SLpIAActivateProduct(hSLC, pProductSkuId);
       goto LABEL_18;
     }
     PHKEY = 0i64;
-    v31 = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
-    v32 = v31;
-    if ( v31 == -1073418222 )
+    hSLgetSLIDList = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
+    v32 = hSLgetSLIDList;
+    if ( hSLgetSLIDList == -1073418222 )
     {
       v32 = -1073418220;
     }
-    else if ( v31 >= 0 )
+    else if ( hSLgetSLIDList >= 0 )
     {
       if ( lpData > 0 )
       {
@@ -287,7 +287,7 @@ LABEL_51:
           }
         }
       }
-      v28 = sub_7FFC9320AA4C(hSLC, pProductSkuId, &Dst);
+      v28 = sub_7FFC9320AA4C(hSLC, pProductSkuId, &ptr);
       v57 = v28;
       if ( v28 >= 0 )
       {
@@ -355,7 +355,7 @@ LABEL_34:
     v33 = v32;
     goto LABEL_47;
   }
-  v7 = 1;
+  V_0 = 1;
   v16 = SLpVLActivateProduct(hSLC, pProductSkuId);
 LABEL_18:
   v14 = v16;
@@ -383,24 +383,24 @@ LABEL_92:
       if ( (v59 & 0xF000) != 0x8000 || (v59 & 0x1FFF0000) != 4128768 || v59 >= 0 )
       {
         if ( (v59 & 0x1FFF0000) != 132186112 || (v39 = (unsigned int)(v59 >> 31), v59 >= 0) )
-          v73 = 0;
+          int0 = 0;
       }
     }
   }
   else
   {
-    v73 = -2147483647;
+    int0 = -2147483647;
   }
   if ( v13 )
   {
     PHKEY = 0i64;
-    v40 = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
-    v41 = v40;
-    if ( v40 == -1073418222 )
+    hSLIDList = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
+    v41 = hSLIDList;
+    if ( hSLIDList == -1073418222 )
     {
       v41 = -1073418220;
     }
-    else if ( v40 >= 0 )
+    else if ( hSLIDList >= 0 )
     {
       if ( lpData > 0 )
       {
@@ -415,19 +415,19 @@ LABEL_111:
       sub_7FFC93207F8C(v41);
       sub_7FFC93212B14(&PHKEY);
       if ( (v41 & 0x80000000) != 0 || mem_addr != v84 )
-        v73 = -2147483647;
+        int0 = -2147483647;
       goto LABEL_114;
     }
     v42 = v41;
     goto LABEL_107;
   }
 LABEL_114:
-  if ( v73 )
+  if ( int0 )
     SLSetGenuineInformation(pProductSkuId, L"SL_LAST_ACT_ATTEMPT_SERVER_FLAGS", 3i64);
 LABEL_116:
   if ( v61 >= 0 )
   {
-    if ( v7 )
+    if ( V_0 )
       sub_7FFC9320CD08(hSLC, pProductSkuId);
     if ( v61 >= 0 )
       sub_7FFC932129D4(v39, v15);
@@ -439,7 +439,7 @@ LABEL_116:
   }
   else
   {
-    sub_7FFC9320DB4C(&v74, v57);
+    sub_7FFC9320DB4C(&eQueryIdTypes, v57);
   }
   sub_7FFC93207F8C(v57);
   v46 = (char *)Buf1;
