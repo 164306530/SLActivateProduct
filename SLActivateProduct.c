@@ -480,3 +480,255 @@ LABEL_116:
     LocalFree(eQueryIdType, hMem);
   return hResult;
 }
+
+
+
+__int64 __fastcall sub_7FFC93379104(__int64 a1, __int64 *a2, __int64 a3, unsigned int a4, __int64 *a5, unsigned int *a6, __int64 *a7, __int64 *a8)
+{
+  __int64 v8; // rdx
+  __int64 v9; // rbx
+  __int64 v10; // rsi
+  __int64 v11; // rdi
+  unsigned int v12; // er13
+  signed int v13; // eax
+  __int64 v14; // rdx
+  __int64 v15; // rcx
+  signed int v16; // er12
+  __int64 v17; // rcx
+  __int64 v18; // r14
+  signed int v19; // eax
+  wchar_t *v20; // r15
+  __int64 v21; // rdx
+  __int64 v22; // rcx
+  __int64 v23; // rax
+  void *v24; // r15
+  signed int v25; // eax
+  __int64 v26; // rdx
+  __int64 v27; // rcx
+  __int64 v28; // rax
+  void *v29; // r15
+  signed int v30; // eax
+  __int64 v31; // rsi
+  __int64 v32; // rax
+  __int64 (__fastcall *v33)(__int64, __int64, _QWORD, _QWORD); // r15
+  wchar_t *v34; // r15
+  BOOL v35; // eax
+  __int64 v36; // rcx
+  __int64 v37; // rcx
+  __int64 v38; // rcx
+  __int64 v39; // rdx
+  __int64 v40; // rcx
+  __int64 v41; // rax
+  __int64 v42; // rdx
+  __int64 v43; // rcx
+  __int64 v44; // rax
+  __int64 v45; // rdx
+  __int64 v46; // rcx
+  __int64 v47; // rax
+  int v49; // [rsp+40h] [rbp-39h]
+  unsigned int v50; // [rsp+44h] [rbp-35h]
+  __int64 v51; // [rsp+48h] [rbp-31h]
+  __int64 v52; // [rsp+50h] [rbp-29h]
+  __int64 v53; // [rsp+58h] [rbp-21h]
+  int v54; // [rsp+60h] [rbp-19h]
+  __int64 v55; // [rsp+68h] [rbp-11h]
+  wchar_t *Str1; // [rsp+70h] [rbp-9h]
+  int v57; // [rsp+78h] [rbp-1h]
+  void *Src; // [rsp+80h] [rbp+7h]
+  __int64 v59; // [rsp+C8h] [rbp+4Fh]
+
+  v8 = *a2;
+  v9 = 0i64;
+  v53 = 0i64;
+  v55 = 0i64;
+  v10 = 0i64;
+  v11 = 0i64;
+  v51 = 0i64;
+  v12 = 0;
+  v52 = 0i64;
+  v13 = SLpGetLicenseAcquisitionInfo(a1, v8, a4, a3, &v54, &v50, &v53);
+  v16 = v13;
+  if ( v13 < 0 )
+    goto LABEL_2;
+  if ( v54 != 3 )
+  {
+LABEL_50:
+    v17 = 2147942413i64;
+    v16 = -2147024883;
+    goto LABEL_51;
+  }
+  v13 = sub_7FFC9337453C(v15, v14, &v55);
+  v16 = v13;
+  if ( v13 < 0 )
+  {
+LABEL_2:
+    v17 = (unsigned int)v13;
+LABEL_51:
+    sub_7FFC93377F24(v17);
+    goto LABEL_52;
+  }
+  v18 = v55;
+  v16 = (*(__int64 (__fastcall **)(__int64, __int64, _QWORD, _QWORD))(*(_QWORD *)v55 + 24i64))(v55, v53, v50, 0i64);
+  if ( v16 < 0 )
+  {
+    sub_7FFC93377F24((unsigned int)v16);
+    sub_7FFC933975D8(&unk_7FFC933E2168, &unk_7FFC933EBDF8);
+    goto LABEL_52;
+  }
+  while ( 1 )
+  {
+    v19 = (*(__int64 (__fastcall **)(__int64, wchar_t **))(*(_QWORD *)v18 + 48i64))(v18, &Str1);
+    v16 = v19;
+    if ( v57 != 2 )
+      goto LABEL_50;
+    if ( v19 == -2147024637 )
+      break;
+    if ( v19 < 0 )
+      goto LABEL_22;
+    v20 = Str1;
+    if ( !wcscmp(Str1, L"SppLAPServerURL") )
+    {
+      if ( v11 )
+      {
+        v23 = GetProcessHeap(v22, v21);
+        HeapFree(v23, 0i64, v11 - 4);
+        sub_7FFC93377F8C(0);
+        v11 = 0i64;
+        v51 = 0i64;
+      }
+      v24 = Src;
+      if ( !Src )
+      {
+        LODWORD(v59) = 0;
+LABEL_18:
+        v25 = sub_7FFC93377DB8(v24);
+        v16 = v25;
+        if ( v25 < 0 )
+          sub_7FFC93377F24((unsigned int)v25);
+        v11 = v51;
+        goto LABEL_21;
+      }
+      v16 = sub_7FFC93377CF8(Src, &v59);
+      if ( v16 >= 0 )
+        goto LABEL_18;
+LABEL_15:
+      sub_7FFC93377F24((unsigned int)v16);
+LABEL_21:
+      sub_7FFC93377F8C(v16);
+      if ( v16 < 0 )
+        goto LABEL_22;
+    }
+    else
+    {
+      if ( !wcscmp(v20, L"SppLAPRequestTokenType") )
+      {
+        if ( v9 )
+        {
+          v28 = GetProcessHeap(v27, v26);
+          HeapFree(v28, 0i64, v9 - 4);
+          sub_7FFC93377F8C(0);
+          v9 = 0i64;
+          v52 = 0i64;
+        }
+        v29 = Src;
+        if ( !Src )
+        {
+          v49 = 0;
+LABEL_30:
+          v30 = sub_7FFC93377DB8(v29);
+          v16 = v30;
+          if ( v30 < 0 )
+            sub_7FFC93377F24((unsigned int)v30);
+          v9 = v52;
+          goto LABEL_21;
+        }
+        v16 = sub_7FFC93377CF8(Src, &v49);
+        if ( v16 >= 0 )
+          goto LABEL_30;
+        goto LABEL_15;
+      }
+      if ( !v20 || !*v20 || v20[1] != 58 )
+        goto LABEL_50;
+      ++v12;
+    }
+  }
+  v31 = 24i64 * v12;
+  if ( !is_mul_ok(v12, 0x18ui64) )
+    v31 = -1i64;
+  v32 = GetProcessHeap(v12, (v12 * (unsigned __int128)0x18ui64) >> 64);
+  v10 = HeapAlloc(v32, 0i64, v31);
+  if ( !v10 )
+  {
+    v16 = -2147024882;
+LABEL_22:
+    v17 = (unsigned int)v16;
+    goto LABEL_51;
+  }
+  v12 = 0;
+  v33 = *(__int64 (__fastcall **)(__int64, __int64, _QWORD, _QWORD))(*(_QWORD *)v18 + 24i64);
+  sub_7FFC93397928(&unk_7FFC933E0E5C, &unk_7FFC933EBD08);
+  v16 = v33(v18, v53, v50, 0i64);
+  if ( v16 < 0 )
+    goto LABEL_22;
+  while ( 1 )
+  {
+    v13 = (*(__int64 (__fastcall **)(__int64, wchar_t **))(*(_QWORD *)v18 + 48i64))(v18, &Str1);
+    if ( v13 == -2147024637 )
+      break;
+    v16 = v13;
+    if ( v13 < 0 )
+      goto LABEL_2;
+    v34 = Str1;
+    if ( wcscmp(Str1, L"SppLAPServerURL") && wcscmp(v34, L"SppLAPRequestTokenType") )
+    {
+      v35 = *v34 != 48;
+      v59 = 3i64 * v12;
+      *(_DWORD *)(v10 + 8 * v59) = v35;
+      v13 = sub_7FFC933A07EC(Str1 + 2);
+      v16 = v13;
+      if ( v13 < 0 )
+        goto LABEL_2;
+      v13 = sub_7FFC933A07EC(Src);
+      v16 = v13;
+      if ( v13 < 0 )
+        goto LABEL_2;
+      ++v12;
+    }
+  }
+  v36 = v10;
+  v10 = 0i64;
+  *a5 = v36;
+  v37 = v11;
+  v11 = 0i64;
+  *a6 = v12;
+  *a7 = v37;
+  v38 = v9;
+  v9 = 0i64;
+  *a8 = v38;
+LABEL_52:
+  if ( v10 )
+    sub_7FFC933A076C(v12, v10);
+  sub_7FFC93377F8C(v16);
+  if ( v9 )
+  {
+    v41 = GetProcessHeap(v40, v39);
+    HeapFree(v41, 0i64, v9 - 4);
+    sub_7FFC93377F8C(0);
+  }
+  sub_7FFC93397294(&unk_7FFC933E26A8, &unk_7FFC933ED0B8);
+  if ( v11 )
+  {
+    v44 = GetProcessHeap(v43, v42);
+    HeapFree(v44, 0i64, v11 - 4);
+    sub_7FFC93377F8C(0);
+  }
+  if ( v10 )
+  {
+    sub_7FFC93396F4C(L"@\a", &unk_7FFC933ED0C8);
+    v47 = GetProcessHeap(v46, v45);
+    HeapFree(v47, 0i64, v10);
+  }
+  sub_7FFC93374AE4(&v55);
+  sub_7FFC93374C0C(&v53);
+  return (unsigned int)v16;
+}
