@@ -3,7 +3,7 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   int V_0; // er12
   __int64 pProductSkuId; // r14
   __int64 hSLC; // r15
-  __int64 v10; // rax
+  __int64 hGetTick; // rax
   int int_0; // edi
   int v12; // eax
   int v13; // er13
@@ -17,7 +17,7 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   signed int v21; // eax
   __int64 v22; // rdx
   __int64 v23; // rcx
-  char *v24; // rbx
+  wchar_t *v24; // rbx
   unsigned int v25; // edi
   __int64 v26; // rax
   __int128 *QueryIdType; // rdx
@@ -91,9 +91,9 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
   dword_0 = 0;
   _mm_storeu_si128((__m128i *)&mem_addrs, (__m128i)0i64);
   v77 = 0i64;
-  v10 = GetTickCount64(SLC, ProductSkuId, cbAppSpecificData, pvAppSpecificData);
+  hGetTick = GetTickCount64(SLC, ProductSkuId, cbAppSpecificData, pvAppSpecificData);
   V_1 = -1;
-  v75 = v10;
+  v75 = hGetTick;
   PHKEY = 0i64;
   int_0 = 0;
   if ( !(unsigned int)RegOpenKeyExW(0xFFFFFFFF80000002i64, L"SYSTEM\\Setup", 0i64, 0x20019i64, &PHKEY) )
@@ -102,18 +102,18 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
     if ( !(unsigned int)RegQueryValueExW(PHKEY, L"OOBEInProgress", 0i64, &lpType, &lpData, &lpcbData) )
       LOBYTE(int_0) = lpData == 1;
   }
-  sub_7FFC93207F8C(0);
+  sub_7FFC9A7F7F8C(0);
   if ( PHKEY )
     RegCloseKey();
   v12 = V_1;
   if ( int_0 )
     v12 = 0;
   V_1 = v12;
-  sub_7FFC93207F8C(0);
+  sub_7FFC9A7F7F8C(0);
   memset(&ptr, 0, 0x30ui64);
   v59 = 0;
   v13 = 0;
-  UNKNOWNCALL((unsigned int *)&unk_7FFC9326F360, (unsigned int *)&unk_7FFC9327C078);
+  VertifySum((unsigned int *)&unk_7FFC9A85F360, (unsigned int *)&unk_7FFC9A86C078);
   v65 = 0;
   if ( !hSLC || !pProductSkuId )
     goto LABEL_9;
@@ -131,15 +131,15 @@ LABEL_9:
 LABEL_10:
       v57 = v14;
 LABEL_11:
-      sub_7FFC93207F24(v14);
+      sub_7FFC9A7F7F24(v14);
       goto LABEL_91;
     }
     if ( pActivationInfo[1] != 1 )
     {
-      sub_7FFC93227294(&unk_7FFC9326F538, &unk_7FFC9327C1A0);
+      sub_7FFC9A817294(&unk_7FFC9A85F538, &unk_7FFC9A86C1A0);
       goto LABEL_9;
     }
-    v16 = sub_7FFC9320AA4C(hSLC, pProductSkuId, &ptr);
+    v16 = GetProductSkuInformation(hSLC, pProductSkuId, (__int64)&ptr);
     goto LABEL_18;
   }
   hgETSLIDLIST = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
@@ -148,37 +148,37 @@ LABEL_11:
   if ( hgETSLIDLIST < 0 )
     v19 = 0;
   v60 = v19;
-  v21 = sub_7FFC9321234C(hSLC, pProductSkuId, &Buf1);
-  v24 = (char *)Buf1;
+  v21 = GetPKeyInformation(hSLC, pProductSkuId, (__int64 *)&Buf1);
+  v24 = (wchar_t *)Buf1;
   v25 = v21;
   if ( v21 < 0 && Buf1 )
   {
     v26 = GetProcessHeap(v23, v22);
-    HeapFree(v26, 0i64, v24 - 4);
-    sub_7FFC93207F8C(0);
+    HeapFree(v26, 0i64, v24 - 2);
+    sub_7FFC9A7F7F8C(0);
     v24 = 0i64;
     Buf1 = 0i64;
   }
-  sub_7FFC93226C14(&unk_7FFC93270438, &unk_7FFC9327CEC8);
-  QueryIdType = &xmmword_7FFC9325F628;
+  Vertify_Sum((unsigned int *)&unk_7FFC9A860438, (unsigned int *)&unk_7FFC9A86CEC8);
+  QueryIdType = &xmmword_7FFC9A84F628;
   if ( v60 )
     QueryIdType = eQueryIdType;
-  sub_7FFC93205404(&eQueryIdTypes, QueryIdType, pProductSkuId, v24, 0i64);
+  sub_7FFC9A7F5404((__int64)&eQueryIdTypes, (__int64)QueryIdType, pProductSkuId, v24, 0ui64);
   v57 = v25;
   if ( (v25 & 0x80000000) != 0 )
   {
-    sub_7FFC93207F24(v25);
+    sub_7FFC9A7F7F24(v25);
     goto LABEL_91;
   }
   if ( Buf1 )
   {
-    v28 = sub_7FFC9320567C(Buf1, L"Volume:GVLK");
+    v28 = sub_7FFC9A7F567C(Buf1, L"Volume:GVLK", &lpData);
     lpDatas = lpData;
   }
   else
   {
     lpDatas = 0;
-    sub_7FFC93207F8C(0);
+    sub_7FFC9A7F7F8C(0);
     v28 = 0;
   }
   v57 = v28;
@@ -188,13 +188,13 @@ LABEL_11:
   {
     if ( Buf1 )
     {
-      v28 = sub_7FFC9320567C(Buf1, L"VT:IA");
+      v28 = sub_7FFC9A7F567C(Buf1, L"VT:IA", &lpData);
       v30 = lpData;
     }
     else
     {
       v30 = 0;
-      sub_7FFC93207F8C(0);
+      sub_7FFC9A7F7F8C(0);
       v28 = 0;
     }
     v57 = v28;
@@ -223,10 +223,10 @@ LABEL_11:
       v32 = -2147467259;
       v33 = 2147500037i64;
 LABEL_47:
-      sub_7FFC93207F24(v33);
+      sub_7FFC9A7F7F24(v33);
 LABEL_51:
-      sub_7FFC93207F8C(v32);
-      sub_7FFC93212B14(&PHKEY);
+      sub_7FFC9A7F7F8C(v32);
+      sub_7FFC9A802B14(&PHKEY);
       v57 = v32;
       if ( (v32 & 0x80000000) != 0 )
       {
@@ -249,17 +249,17 @@ LABEL_51:
                              &pnReturnIds,
                              &ppReturnIds) == -1073418222 )
         {
-          v28 = sub_7FFC9320CA68(&v59);
+          v28 = sub_7FFC9A7FCA68(&v59);
           v57 = v28;
-          if ( (unsigned int)dword_7FFC9327B000 > 5
-            && qword_7FFC9327B010 & 0x400000000000i64
-            && (qword_7FFC9327B018 & 0x400000000000i64) == qword_7FFC9327B018 )
+          if ( (unsigned int)dword_7FFC9A86B000 > 5
+            && qword_7FFC9A86B010 & 0x400000000000i64
+            && (qword_7FFC9A86B018 & 0x400000000000i64) == qword_7FFC9A86B018 )
           {
             v85 = &v57;
             v87 = &v59;
             v86 = 4i64;
             v88 = 4i64;
-            sub_7FFC93201048(4, (unsigned __int64)&unk_7FFC93273975, v35);
+            sub_7FFC9A7F1048(4, (unsigned __int64)&unk_7FFC9A863975, v35);
             v28 = v57;
           }
           if ( v28 < 0 )
@@ -270,7 +270,7 @@ LABEL_51:
             v61 = 0;
             goto LABEL_92;
           }
-          v28 = sub_7FFC9325878C(&v65);
+          v28 = sub_7FFC9A84878C(&v65);
           v57 = v28;
           if ( v28 < 0 )
             goto LABEL_34;
@@ -287,7 +287,7 @@ LABEL_51:
           }
         }
       }
-      v28 = sub_7FFC9320AA4C(hSLC, pProductSkuId, &ptr);
+      v28 = GetProductSkuInformation(hSLC, pProductSkuId, (__int64)&ptr);// 或者密钥加密信息
       v57 = v28;
       if ( v28 >= 0 )
       {
@@ -298,18 +298,18 @@ LABEL_51:
         {
           goto LABEL_137;
         }
-        v28 = sub_7FFC9320CA68(&v59);
+        v28 = sub_7FFC9A7FCA68(&v59);
         v57 = v28;
-        if ( (unsigned int)dword_7FFC9327B000 > 5
-          && qword_7FFC9327B010 & 0x400000000000i64
-          && (qword_7FFC9327B018 & 0x400000000000i64) == qword_7FFC9327B018 )
+        if ( (unsigned int)dword_7FFC9A86B000 > 5
+          && qword_7FFC9A86B010 & 0x400000000000i64
+          && (qword_7FFC9A86B018 & 0x400000000000i64) == qword_7FFC9A86B018 )
         {
           v85 = &v57;
           v86 = 4i64;
           v87 = &v59;
-          sub_7FFC93226F4C(&unk_7FFC9326DD0C, &unk_7FFC9327D080);
+          sub_7FFC9A816F4C(&unk_7FFC9A85DD0C, &unk_7FFC9A86D080);
           v88 = 4i64;
-          sub_7FFC93201048(v36, (unsigned __int64)&unk_7FFC93273975, v37);
+          sub_7FFC9A7F1048(v36, (unsigned __int64)&unk_7FFC9A863975, v37);
           v28 = v57;
         }
         if ( v28 >= 0 )
@@ -317,13 +317,13 @@ LABEL_51:
 LABEL_137:
           if ( Buf1 )
           {
-            v28 = sub_7FFC9320567C(Buf1, L"Volume:CSVLK");
+            v28 = sub_7FFC9A7F567C(Buf1, L"Volume:CSVLK", &lpData);
             v38 = lpData;
           }
           else
           {
             v38 = 0;
-            sub_7FFC93207F8C(0);
+            sub_7FFC9A7F7F8C(0);
             v28 = 0;
           }
           v57 = v28;
@@ -410,10 +410,10 @@ LABEL_92:
       v41 = -2147467259;
       v42 = 2147500037i64;
 LABEL_107:
-      sub_7FFC93207F24(v42);
+      sub_7FFC9A7F7F24(v42);
 LABEL_111:
-      sub_7FFC93207F8C(v41);
-      sub_7FFC93212B14(&PHKEY);
+      sub_7FFC9A7F7F8C(v41);
+      sub_7FFC9A802B14(&PHKEY);
       if ( (v41 & 0x80000000) != 0 || mem_addr != v84 )
         int0 = -2147483647;
       goto LABEL_114;
@@ -428,27 +428,27 @@ LABEL_116:
   if ( v61 >= 0 )
   {
     if ( V_0 )
-      sub_7FFC9320CD08(hSLC, pProductSkuId);
+      sub_7FFC9A7FCD08(hSLC, pProductSkuId);
     if ( v61 >= 0 )
-      sub_7FFC932129D4(v39, v15);
+      sub_7FFC9A8029D4(v39, v15);
   }
   if ( v57 == -1073418220 )
   {
-    sub_7FFC93207F24(1i64);
-    sub_7FFC93207F8C(v43);
+    sub_7FFC9A7F7F24(1i64);
+    sub_7FFC9A7F7F8C(v43);
   }
   else
   {
-    sub_7FFC9320DB4C(&eQueryIdTypes, v57);
+    sub_7FFC9A7FDB4C(&eQueryIdTypes, v57);
   }
-  sub_7FFC93207F8C(v57);
+  sub_7FFC9A7F7F8C(v57);
   v46 = (char *)Buf1;
   hResult = v57;
   if ( Buf1 )
   {
     v48 = GetProcessHeap(v45, v44);
     HeapFree(v48, 0i64, v46 - 4);
-    sub_7FFC93207F8C(0);
+    sub_7FFC9A7F7F8C(0);
     Buf1 = 0i64;
   }
   v49 = v77;
@@ -456,7 +456,7 @@ LABEL_116:
   {
     v50 = GetProcessHeap(v45, v44);
     HeapFree(v50, 0i64, v49 - 4);
-    sub_7FFC93207F8C(0);
+    sub_7FFC9A7F7F8C(0);
     v77 = 0i64;
   }
   v51 = *((_QWORD *)&mem_addrs + 1);
@@ -464,7 +464,7 @@ LABEL_116:
   {
     v52 = GetProcessHeap(v45, v44);
     HeapFree(v52, 0i64, v51 - 4);
-    sub_7FFC93207F8C(0);
+    sub_7FFC9A7F7F8C(0);
     *((_QWORD *)&mem_addrs + 1) = 0i64;
   }
   v53 = mem_addrs;
@@ -472,10 +472,10 @@ LABEL_116:
   {
     v54 = GetProcessHeap(v45, v44);
     HeapFree(v54, 0i64, v53 - 4);
-    sub_7FFC93207F8C(0);
+    sub_7FFC9A7F7F8C(0);
     *(_QWORD *)&mem_addrs = 0i64;
   }
-  sub_7FFC93204C0C(&ppReturnIds);
+  sub_7FFC9A7F4C0C(&ppReturnIds);
   if ( eQueryIdType )
     LocalFree(eQueryIdType, hMem);
   return hResult;
