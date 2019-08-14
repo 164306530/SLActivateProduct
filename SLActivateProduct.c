@@ -102,18 +102,18 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
     if ( !(unsigned int)RegQueryValueExW(PHKEY, L"OOBEInProgress", 0i64, &lpType, &lpData, &lpcbData) )
       LOBYTE(int_0) = lpData == 1;
   }
-  sub_7FFC9A7F7F8C(0);
+  sub_7FFC7D687F8C(0);
   if ( PHKEY )
     RegCloseKey();
   v12 = V_1;
   if ( int_0 )
     v12 = 0;
   V_1 = v12;
-  sub_7FFC9A7F7F8C(0);
+  sub_7FFC7D687F8C(0);
   memset(&ptr, 0, 0x30ui64);
   v59 = 0;
   v13 = 0;
-  VertifySum((unsigned int *)&unk_7FFC9A85F360, (unsigned int *)&unk_7FFC9A86C078);
+  VertifySum((unsigned int *)&unk_7FFC7D6EF360, (unsigned int *)&unk_7FFC7D6FC078);
   v65 = 0;
   if ( !hSLC || !pProductSkuId )
     goto LABEL_9;
@@ -127,19 +127,19 @@ __int64 __fastcall SLActivateProduct(__int64 SLC, __int64 ProductSkuId, __int64 
     if ( *pActivationInfo < 8u )
     {
 LABEL_9:
-      v14 = 2147942487i64;
+      v14 = 0x80070057i64;
 LABEL_10:
       v57 = v14;
 LABEL_11:
-      sub_7FFC9A7F7F24(v14);
+      sub_7FFC7D687F24(v14);
       goto LABEL_91;
     }
     if ( pActivationInfo[1] != 1 )
     {
-      sub_7FFC9A817294(&unk_7FFC9A85F538, &unk_7FFC9A86C1A0);
+      sub_7FFC7D6A7294((unsigned int *)&unk_7FFC7D6EF538, (unsigned int *)&unk_7FFC7D6FC1A0);
       goto LABEL_9;
     }
-    v16 = GetProductSkuInformation(hSLC, pProductSkuId, (__int64)&ptr);
+    v16 = GetEncryptInfo(hSLC, pProductSkuId, (__int64)&ptr);
     goto LABEL_18;
   }
   hgETSLIDLIST = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
@@ -155,30 +155,30 @@ LABEL_11:
   {
     v26 = GetProcessHeap(v23, v22);
     HeapFree(v26, 0i64, v24 - 2);
-    sub_7FFC9A7F7F8C(0);
+    sub_7FFC7D687F8C(0);
     v24 = 0i64;
     Buf1 = 0i64;
   }
-  Vertify_Sum((unsigned int *)&unk_7FFC9A860438, (unsigned int *)&unk_7FFC9A86CEC8);
-  QueryIdType = &xmmword_7FFC9A84F628;
+  Vertify_Sum((unsigned int *)&unk_7FFC7D6F0438, (unsigned int *)&unk_7FFC7D6FCEC8);
+  QueryIdType = &xmmword_7FFC7D6DF628;
   if ( v60 )
     QueryIdType = eQueryIdType;
-  sub_7FFC9A7F5404((__int64)&eQueryIdTypes, (__int64)QueryIdType, pProductSkuId, v24, 0ui64);
+  sub_7FFC7D685404((__int64)&eQueryIdTypes, (__int64)QueryIdType, pProductSkuId, v24, 0ui64);
   v57 = v25;
   if ( (v25 & 0x80000000) != 0 )
   {
-    sub_7FFC9A7F7F24(v25);
+    sub_7FFC7D687F24(v25);
     goto LABEL_91;
   }
   if ( Buf1 )
   {
-    v28 = sub_7FFC9A7F567C(Buf1, L"Volume:GVLK", &lpData);
+    v28 = sub_7FFC7D68567C(Buf1, L"Volume:GVLK", &lpData);
     lpDatas = lpData;
   }
   else
   {
     lpDatas = 0;
-    sub_7FFC9A7F7F8C(0);
+    sub_7FFC7D687F8C(0);
     v28 = 0;
   }
   v57 = v28;
@@ -188,13 +188,13 @@ LABEL_11:
   {
     if ( Buf1 )
     {
-      v28 = sub_7FFC9A7F567C(Buf1, L"VT:IA", &lpData);
+      v28 = sub_7FFC7D68567C(Buf1, L"VT:IA", &lpData);
       v30 = lpData;
     }
     else
     {
       v30 = 0;
-      sub_7FFC9A7F7F8C(0);
+      sub_7FFC7D687F8C(0);
       v28 = 0;
     }
     v57 = v28;
@@ -209,9 +209,9 @@ LABEL_11:
     PHKEY = 0i64;
     hSLgetSLIDList = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
     v32 = hSLgetSLIDList;
-    if ( hSLgetSLIDList == -1073418222 )
+    if ( hSLgetSLIDList == 0xC004F012 )
     {
-      v32 = -1073418220;
+      v32 = 0xC004F014;
     }
     else if ( hSLgetSLIDList >= 0 )
     {
@@ -220,13 +220,13 @@ LABEL_11:
         _mm_storeu_si128((__m128i *)&mem_addr, *PHKEY);
         goto LABEL_51;
       }
-      v32 = -2147467259;
-      v33 = 2147500037i64;
+      v32 = 0x80004005;
+      v33 = 0x80004005i64;
 LABEL_47:
-      sub_7FFC9A7F7F24(v33);
+      sub_7FFC7D687F24(v33);
 LABEL_51:
-      sub_7FFC9A7F7F8C(v32);
-      sub_7FFC9A802B14(&PHKEY);
+      sub_7FFC7D687F8C(v32);
+      sub_7FFC7D692B14(&PHKEY);
       v57 = v32;
       if ( (v32 & 0x80000000) != 0 )
       {
@@ -236,8 +236,8 @@ LABEL_51:
       v13 = 1;
       if ( v20 >= 0
         && v60 == 1
-        && *(_QWORD *)eQueryIdType == 5580477268562093876i64
-        && *((_QWORD *)eQueryIdType + 1) == -6988154782983242088i64 )
+        && *(_QWORD *)eQueryIdType == 0x4D71D68255C92734i64
+        && *((_QWORD *)eQueryIdType + 1) == 0x9F05163FECD63E98i64 )
       {
         if ( ppReturnIds )
           LocalFree(ppReturnIds, v34);
@@ -247,19 +247,19 @@ LABEL_51:
                              L"DependsOn",
                              0i64,
                              &pnReturnIds,
-                             &ppReturnIds) == -1073418222 )
+                             &ppReturnIds) == 0xC004F012 )
         {
-          v28 = sub_7FFC9A7FCA68(&v59);
+          v28 = sub_7FFC7D68CA68(&v59);
           v57 = v28;
-          if ( (unsigned int)dword_7FFC9A86B000 > 5
-            && qword_7FFC9A86B010 & 0x400000000000i64
-            && (qword_7FFC9A86B018 & 0x400000000000i64) == qword_7FFC9A86B018 )
+          if ( (unsigned int)dword_7FFC7D6FB000 > 5
+            && qword_7FFC7D6FB010 & 0x400000000000i64
+            && (qword_7FFC7D6FB018 & 0x400000000000i64) == qword_7FFC7D6FB018 )
           {
             v85 = &v57;
             v87 = &v59;
             v86 = 4i64;
             v88 = 4i64;
-            sub_7FFC9A7F1048(4, (unsigned __int64)&unk_7FFC9A863975, v35);
+            sub_7FFC7D681048(4, (unsigned __int64)&unk_7FFC7D6F3975, v35);
             v28 = v57;
           }
           if ( v28 < 0 )
@@ -270,16 +270,16 @@ LABEL_51:
             v61 = 0;
             goto LABEL_92;
           }
-          v28 = sub_7FFC9A84878C(&v65);
+          v28 = sub_7FFC7D6D878C(&v65);
           v57 = v28;
           if ( v28 < 0 )
             goto LABEL_34;
           if ( v65 )
           {
             v14 = (unsigned int)v59;
-            if ( v59 == -2147221164 )
+            if ( v59 == 0x80040154 )
             {
-              v14 = 3221536771i64;
+              v14 = 0xC004C003i64;
               goto LABEL_10;
             }
             v17 = v59 < 0;
@@ -287,29 +287,29 @@ LABEL_51:
           }
         }
       }
-      v28 = GetProductSkuInformation(hSLC, pProductSkuId, (__int64)&ptr);// 或者密钥加密信息
+      v28 = GetEncryptInfo(hSLC, pProductSkuId, (__int64)&ptr);// 获取密钥加密信息
       v57 = v28;
       if ( v28 >= 0 )
       {
         if ( v20 < 0
           || v60 != 1
-          || *(_QWORD *)eQueryIdType != 5580477268562093876i64
-          || *((_QWORD *)eQueryIdType + 1) != -6988154782983242088i64 )
+          || *(_QWORD *)eQueryIdType != 0x4D71D68255C92734i64
+          || *((_QWORD *)eQueryIdType + 1) != 0x9F05163FECD63E98i64 )
         {
           goto LABEL_137;
         }
-        v28 = sub_7FFC9A7FCA68(&v59);
+        v28 = sub_7FFC7D68CA68(&v59);
         v57 = v28;
-        if ( (unsigned int)dword_7FFC9A86B000 > 5
-          && qword_7FFC9A86B010 & 0x400000000000i64
-          && (qword_7FFC9A86B018 & 0x400000000000i64) == qword_7FFC9A86B018 )
+        if ( (unsigned int)dword_7FFC7D6FB000 > 5
+          && qword_7FFC7D6FB010 & 0x400000000000i64
+          && (qword_7FFC7D6FB018 & 0x400000000000i64) == qword_7FFC7D6FB018 )
         {
           v85 = &v57;
           v86 = 4i64;
           v87 = &v59;
-          sub_7FFC9A816F4C(&unk_7FFC9A85DD0C, &unk_7FFC9A86D080);
+          sub_7FFC7D6A6F4C(&unk_7FFC7D6EDD0C, &unk_7FFC7D6FD080);
           v88 = 4i64;
-          sub_7FFC9A7F1048(v36, (unsigned __int64)&unk_7FFC9A863975, v37);
+          sub_7FFC7D681048(v36, (unsigned __int64)&unk_7FFC7D6F3975, v37);
           v28 = v57;
         }
         if ( v28 >= 0 )
@@ -317,13 +317,13 @@ LABEL_51:
 LABEL_137:
           if ( Buf1 )
           {
-            v28 = sub_7FFC9A7F567C(Buf1, L"Volume:CSVLK", &lpData);
+            v28 = sub_7FFC7D68567C(Buf1, L"Volume:CSVLK", &lpData);
             v38 = lpData;
           }
           else
           {
             v38 = 0;
-            sub_7FFC9A7F7F8C(0);
+            sub_7FFC7D687F8C(0);
             v28 = 0;
           }
           v57 = v28;
@@ -379,26 +379,26 @@ LABEL_92:
     v39 = (unsigned int)v59;
     if ( v59 < 0 )
     {
-      v15 = 536805376i64;
-      if ( (v59 & 0xF000) != 0x8000 || (v59 & 0x1FFF0000) != 4128768 || v59 >= 0 )
+      v15 = 0x1FFF0000i64;
+      if ( (v59 & 0xF000) != 0x8000 || (v59 & 0x1FFF0000) != 0x3F0000 || v59 >= 0 )
       {
-        if ( (v59 & 0x1FFF0000) != 132186112 || (v39 = (unsigned int)(v59 >> 31), v59 >= 0) )
+        if ( (v59 & 0x1FFF0000) != 0x7E10000 || (v39 = (unsigned int)(v59 >> 31), v59 >= 0) )
           int0 = 0;
       }
     }
   }
   else
   {
-    int0 = -2147483647;
+    int0 = 0x80000001;
   }
   if ( v13 )
   {
     PHKEY = 0i64;
     hSLIDList = SLGetSLIDList(hSLC, 1i64, pProductSkuId);
     v41 = hSLIDList;
-    if ( hSLIDList == -1073418222 )
+    if ( hSLIDList == 0xC004F012 )
     {
-      v41 = -1073418220;
+      v41 = 0xC004F014;
     }
     else if ( hSLIDList >= 0 )
     {
@@ -407,15 +407,15 @@ LABEL_92:
         _mm_storeu_si128((__m128i *)&v84, *PHKEY);
         goto LABEL_111;
       }
-      v41 = -2147467259;
-      v42 = 2147500037i64;
+      v41 = 0x80004005;
+      v42 = 0x80004005i64;
 LABEL_107:
-      sub_7FFC9A7F7F24(v42);
+      sub_7FFC7D687F24(v42);
 LABEL_111:
-      sub_7FFC9A7F7F8C(v41);
-      sub_7FFC9A802B14(&PHKEY);
+      sub_7FFC7D687F8C(v41);
+      sub_7FFC7D692B14(&PHKEY);
       if ( (v41 & 0x80000000) != 0 || mem_addr != v84 )
-        int0 = -2147483647;
+        int0 = 0x80000001;
       goto LABEL_114;
     }
     v42 = v41;
@@ -428,27 +428,27 @@ LABEL_116:
   if ( v61 >= 0 )
   {
     if ( V_0 )
-      sub_7FFC9A7FCD08(hSLC, pProductSkuId);
+      sub_7FFC7D68CD08(hSLC, pProductSkuId);
     if ( v61 >= 0 )
-      sub_7FFC9A8029D4(v39, v15);
+      sub_7FFC7D6929D4(v39, v15);
   }
-  if ( v57 == -1073418220 )
+  if ( v57 == 0xC004F014 )
   {
-    sub_7FFC9A7F7F24(1i64);
-    sub_7FFC9A7F7F8C(v43);
+    sub_7FFC7D687F24(1i64);
+    sub_7FFC7D687F8C(v43);
   }
   else
   {
-    sub_7FFC9A7FDB4C(&eQueryIdTypes, v57);
+    sub_7FFC7D68DB4C(&eQueryIdTypes, v57);
   }
-  sub_7FFC9A7F7F8C(v57);
+  sub_7FFC7D687F8C(v57);
   v46 = (char *)Buf1;
   hResult = v57;
   if ( Buf1 )
   {
     v48 = GetProcessHeap(v45, v44);
     HeapFree(v48, 0i64, v46 - 4);
-    sub_7FFC9A7F7F8C(0);
+    sub_7FFC7D687F8C(0);
     Buf1 = 0i64;
   }
   v49 = v77;
@@ -456,7 +456,7 @@ LABEL_116:
   {
     v50 = GetProcessHeap(v45, v44);
     HeapFree(v50, 0i64, v49 - 4);
-    sub_7FFC9A7F7F8C(0);
+    sub_7FFC7D687F8C(0);
     v77 = 0i64;
   }
   v51 = *((_QWORD *)&mem_addrs + 1);
@@ -464,7 +464,7 @@ LABEL_116:
   {
     v52 = GetProcessHeap(v45, v44);
     HeapFree(v52, 0i64, v51 - 4);
-    sub_7FFC9A7F7F8C(0);
+    sub_7FFC7D687F8C(0);
     *((_QWORD *)&mem_addrs + 1) = 0i64;
   }
   v53 = mem_addrs;
@@ -472,10 +472,10 @@ LABEL_116:
   {
     v54 = GetProcessHeap(v45, v44);
     HeapFree(v54, 0i64, v53 - 4);
-    sub_7FFC9A7F7F8C(0);
+    sub_7FFC7D687F8C(0);
     *(_QWORD *)&mem_addrs = 0i64;
   }
-  sub_7FFC9A7F4C0C(&ppReturnIds);
+  sub_7FFC7D684C0C(&ppReturnIds);
   if ( eQueryIdType )
     LocalFree(eQueryIdType, hMem);
   return hResult;
