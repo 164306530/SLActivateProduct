@@ -187,29 +187,33 @@ LABEL_22:
                 if (hResult == 0)
                 {
                     hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
-                    IntPtr pDll = LoadLibrary("sppcext.dll");
-                    if (pDll != IntPtr.Zero)
+                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
+                    if (hResult==0)
                     {
-                        var hMod = GetModuleHandle("sppcext");
-                        if (hMod == IntPtr.Zero)  
+                        IntPtr pDll = LoadLibrary("sppcext.dll");
+                        if (pDll != IntPtr.Zero)
                         {
-                            Console.WriteLine(Marshal.GetLastWin32Error());
+                            var hMod = GetModuleHandle("sppcext");
+                            if (hMod == IntPtr.Zero)
+                            {
+                                Console.WriteLine(Marshal.GetLastWin32Error());
+                            }
+                            var pAddressHwidGetCurrentEx = hMod + 0x2A791;
+                            GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
+                            SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
+                            IntPtr Values = Marshal.AllocHGlobal(64);
+                            var hErrorCode = GetErrerCodeFunc(GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
+                            if (hErrorCode != 0)
+                            {
+                                Console.WriteLine(hResult.ToString());
+                            }
+                            else
+                            {
+                                Console.WriteLine("在线密钥");
+                            }
+                            bool hFree = FreeLibrary(pDll);
                         }
-                        var pAddressHwidGetCurrentEx = hMod + 0x2A791;
-                        GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
-                        SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
-                        IntPtr Values = Marshal.AllocHGlobal(64);
-                        var hErrorCode = GetErrerCodeFunc( GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
-                        if (hErrorCode != 0)
-                        {
-                            Console.WriteLine(hResult.ToString());
-                        }
-                        else
-                        {
-                            Console.WriteLine("在线密钥");
-                        }
-                        bool hFree = FreeLibrary(pDll);
-                    }
+                    }              
                     hResult = SLpClearActivationInProgress(hSLC, GuidSkuId.ToByteArray());                   
                 }
             }
