@@ -170,7 +170,7 @@ private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAp
                         var hErrorCode = GetErrerCodeFunc(hSLC, GuidSkuId.ToByteArray(), null, null, null, null, 0);
                         if (hErrorCode != 0)
                         {
-                            Console.WriteLine(hErrorCode.ToString());
+                            Console.WriteLine("0x" + hErrorCode.ToString("X8"));
                         }
                         else
                         {
