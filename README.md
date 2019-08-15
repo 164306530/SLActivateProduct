@@ -174,7 +174,7 @@ LABEL_22:
         }
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
  private delegate int GetErrerCode(byte[] pProductSkuId, IntPtr hSLC, IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
-
+//第三个参数具体不详,可能会引起内存写入异常
     RetID = PidGenX(Keys, pkeyfilePath, "XXXXX", 0, PID, DPID3, DPID4);
     if (RetID == 0)
             {
