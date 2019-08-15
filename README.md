@@ -153,3 +153,29 @@ LABEL_22:
  hErrorcode = (void *)geterrercode((int)pSKUID, hslc, (int)&savedregs, 0, 0, ActivationInfo);
  ```
 以32位的10.0.18362.1为例,比如dll的入口地址为55C20A70,该函数的地址为55C0A791,偏移量为162DF
+```c#
+ [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAppSpecificData, byte[] pvAppSpecificData, byte[] pActivationInfo, string pwszProxyServer, ushort wProxyPort);
+
+                    IntPtr pDll = LoadLibrary("sppcext.dll");
+                    if (pDll != IntPtr.Zero)
+                    {
+                        var hMod = GetModuleHandle("sppcext");
+                        if (hMod == IntPtr.Zero)
+                        {
+                            Console.WriteLine(Marshal.GetLastWin32Error());
+                        }
+                        var pAddressHwidGetCurrentEx = hMod + 0x162DF;
+                        GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
+                        var hErrorCode = GetErrerCodeFunc(hSLC, GuidSkuId.ToByteArray(), null, null, null, null, 0);
+                        if (hErrorCode != 0)
+                        {
+                            Console.WriteLine(hResult.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine("在线密钥");
+                        }
+                        bool hFree = FreeLibrary(pDll);
+                    }
+```     
