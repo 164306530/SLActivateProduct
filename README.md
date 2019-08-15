@@ -146,6 +146,9 @@ LABEL_22:
   return hSLpSetActivationInProgress;
 }
 ```
-
+主要就一处,只要从外部找到这个函数(因为不是输出函数,只能通过入口地址加偏移量定位),直接就可以调用这个函数获取错误代码:
+```c
+ hErrorcode = (void *)geterrercode((int)pSKUID, hslc, (int)&savedregs, 0, 0, ActivationInfo);
+ ```
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/33.png)
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/44.png)
