@@ -145,6 +145,7 @@ LABEL_22:
   sub_55C0B049(&v16);
   return hSLpSetActivationInProgress;
 }
+```
 
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/33.png)
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/44.png)
