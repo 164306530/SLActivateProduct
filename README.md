@@ -187,7 +187,7 @@ LABEL_22:
                 int hResult = SLOpen(ref hSLC);
                 if (hResult == 0)
                 {
-                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
+                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray()); //判断是否有其他激活进程
                     if (hResult==0)
                     {
                         IntPtr pDll = LoadLibrary("sppcext.dll");
