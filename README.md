@@ -187,7 +187,6 @@ LABEL_22:
                 if (hResult == 0)
                 {
                     hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
-                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
                     if (hResult==0)
                     {
                         IntPtr pDll = LoadLibrary("sppcext.dll");
