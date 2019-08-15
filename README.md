@@ -174,6 +174,19 @@ LABEL_22:
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
  private delegate int GetErrerCode(byte[] pProductSkuId, IntPtr hSLC, IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
 
+    RetID = PidGenX(Keys, pkeyfilePath, "XXXXX", 0, PID, DPID3, DPID4);
+    if (RetID == 0)
+            {
+
+                DigitalProductId3 pid3 = (DigitalProductId3)Marshal.PtrToStructure(DPID3, typeof(DigitalProductId3));
+                DigitalProductId4 pid4 = (DigitalProductId4)Marshal.PtrToStructure(DPID4, typeof(DigitalProductId4));
+                string szActivationId = Encoding.Unicode.GetString(pid4.szActivationId).Replace("\0", "");
+                Guid GuidSkuId = new Guid(szActivationId);
+                IntPtr hSLC = new IntPtr();
+                int hResult = SLOpen(ref hSLC);
+                if (hResult == 0)
+                {
+                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
                     IntPtr pDll = LoadLibrary("sppcext.dll");
                     if (pDll != IntPtr.Zero)
                     {
@@ -196,4 +209,10 @@ LABEL_22:
                             Console.WriteLine("在线密钥");
                         }
                         bool hFree = FreeLibrary(pDll);
+                    }
+                    hResult = SLpClearActivationInProgress(hSLC, GuidSkuId.ToByteArray());                   
+                }
+            }
+        }
+
 ```     
