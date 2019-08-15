@@ -18,6 +18,8 @@ WINHTTP.DLL    WinHttpCrackUrl   WinHttpOpen inHttpGetDefaultProxyConfiguration 
 大致应该是这样(密钥激活过程):加密密钥及硬件等信息，利用httprequest post这些信息到指定网址,如果错误返回错误代码,如果正确返回合法licenseID. 将这些信息存储到SSL Store.Windows调用一系列算法如果该license对应的各种信息是合法就激活系统。
 
 经过拦截WinHttpOpen找到sppcext.dll中的调用加密密钥数据后调用httprequest的关键部分：
+
+```c
 int __fastcall GetEncryptKey(int hSLCs, SLID *pAppIDs, int a3)
 {
   char *v3; // esi
