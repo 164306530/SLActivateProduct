@@ -198,9 +198,8 @@ LABEL_22:
                             {
                                 Console.WriteLine(Marshal.GetLastWin32Error());
                             }
-                            var pAddressHwidGetCurrentEx = hMod + 0x2A791;
-                            GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
-                            SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
+                            var pGetErrerCode = hMod + 0x2A791;
+                            GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pGetErrerCode, typeof(GetErrerCode));
                             IntPtr Values = Marshal.AllocHGlobal(128);
                             var hErrorCode = GetErrerCodeFunc(GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
                             if (hErrorCode != 0)
