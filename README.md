@@ -191,7 +191,7 @@ LABEL_22:
                     if (pDll != IntPtr.Zero)
                     {
                         var hMod = GetModuleHandle("sppcext");
-                        if (hMod == IntPtr.Zero)  //0x58680000
+                        if (hMod == IntPtr.Zero)  
                         {
                             Console.WriteLine(Marshal.GetLastWin32Error());
                         }
