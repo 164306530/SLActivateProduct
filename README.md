@@ -155,27 +155,26 @@ LABEL_22:
 以32位的10.0.18362.1为例,比如dll的入口地址为0x10000000,该函数的地址为0x1002A791‬,偏移量为0x2A791.如果不会算可以找个已有的输出函数做为中间值计算.
 ```c#
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAppSpecificData, byte[] pvAppSpecificData, byte[] pActivationInfo, string pwszProxyServer, ushort wProxyPort);
+ private delegate int GetErrerCode(byte[] pProductSkuId, IntPtr hSLC,  byte[] unknown, int unk1, int unk2, byte[] pActivationInfo);
 
                     IntPtr pDll = LoadLibrary("sppcext.dll");
                     if (pDll != IntPtr.Zero)
                     {
                         var hMod = GetModuleHandle("sppcext");
-                        if (hMod == IntPtr.Zero)
+                        if (hMod == IntPtr.Zero)  //0x58680000
                         {
                             Console.WriteLine(Marshal.GetLastWin32Error());
                         }
-                        var pAddressHwidGetCurrentEx = hMod+0x2A791;
+                        var pAddressHwidGetCurrentEx = hMod + 0x2A791;
                         GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
-                        var hErrorCode = GetErrerCodeFunc(hSLC, GuidSkuId.ToByteArray(), null, null, null, null, 0);
+                        var hErrorCode = GetErrerCodeFunc( GuidSkuId.ToByteArray(), hSLC, null, 0,0, null);
                         if (hErrorCode != 0)
                         {
-                            Console.WriteLine("0x" + hErrorCode.ToString("X8"));
+                            Console.WriteLine(hResult.ToString());
                         }
                         else
                         {
                             Console.WriteLine("在线密钥");
                         }
                         bool hFree = FreeLibrary(pDll);
-                    }
 ```     
