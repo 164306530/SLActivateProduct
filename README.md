@@ -152,3 +152,4 @@ LABEL_22:
 ```c
  hErrorcode = (void *)geterrercode((int)pSKUID, hslc, (int)&savedregs, 0, 0, ActivationInfo);
  ```
+以32位的10.0.18362.1为例,比如dll的入口地址为55C20A70,该函数的地址为55C0A791,偏移量为162DF
