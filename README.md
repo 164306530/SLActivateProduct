@@ -200,7 +200,7 @@ LABEL_22:
                             var pAddressHwidGetCurrentEx = hMod + 0x2A791;
                             GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
                             SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
-                            IntPtr Values = Marshal.AllocHGlobal(64);
+                            IntPtr Values = Marshal.AllocHGlobal(128);
                             var hErrorCode = GetErrerCodeFunc(GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
                             if (hErrorCode != 0)
                             {
@@ -211,6 +211,7 @@ LABEL_22:
                                 Console.WriteLine("在线密钥");
                             }
                             bool hFree = FreeLibrary(pDll);
+                            Marshal.FreeHGlobal(Values);
                         }
                     }              
                     hResult = SLpClearActivationInProgress(hSLC, GuidSkuId.ToByteArray());                   
