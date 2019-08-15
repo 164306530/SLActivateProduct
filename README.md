@@ -154,8 +154,25 @@ LABEL_22:
  ```
 以32位的10.0.18362.1为例,比如dll的入口地址为0x10000000,该函数的地址为0x1002A791‬,偏移量为0x2A791.如果不会算可以找个已有的输出函数做为中间值计算.
 ```c#
+       public enum SL_ACTIVATION_TYPE
+        {
+            SL_ACTIVATION_TYPE_DEFAULT,
+            SL_ACTIVATION_TYPE_ACTIVE_DIRECTORY
+        }
+        public struct SL_ACTIVATION_INFO_HEADER
+        {
+            public uint cbSize;
+            public SL_ACTIVATION_TYPE type;
+        }
+
+        public struct SL_AD_ACTIVATION_INFO
+        {
+            public SL_ACTIVATION_INFO_HEADER header;
+            public string pwszProductKey;
+            public string pwszActivationObjectName;
+        }
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
- private delegate int GetErrerCode(byte[] pProductSkuId, IntPtr hSLC,  byte[] unknown, int unk1, int unk2, byte[] pActivationInfo);
+ private delegate int GetErrerCode(byte[] pProductSkuId, IntPtr hSLC, IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
 
                     IntPtr pDll = LoadLibrary("sppcext.dll");
                     if (pDll != IntPtr.Zero)
@@ -167,7 +184,9 @@ LABEL_22:
                         }
                         var pAddressHwidGetCurrentEx = hMod + 0x2A791;
                         GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
-                        var hErrorCode = GetErrerCodeFunc( GuidSkuId.ToByteArray(), hSLC, null, 0,0, null);
+                        SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
+                        IntPtr Values = Marshal.AllocHGlobal(64);
+                        var hErrorCode = GetErrerCodeFunc( GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
                         if (hErrorCode != 0)
                         {
                             Console.WriteLine(hResult.ToString());
