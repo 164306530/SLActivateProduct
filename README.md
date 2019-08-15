@@ -152,7 +152,7 @@ LABEL_22:
 ```c
  hErrorcode = (void *)geterrercode((int)pSKUID, hslc, (int)&savedregs, 0, 0, ActivationInfo);
  ```
-以32位的10.0.18362.1为例,比如dll的入口地址为0x10000000,该函数的地址为0x1002A791‬,偏移量为0x2A791.
+以32位的10.0.18362.1为例,比如dll的入口地址为0x10000000,该函数的地址为0x1002A791‬,偏移量为0x2A791.如果不会算可以找个已有的输出函数做为中间值计算.
 ```c#
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAppSpecificData, byte[] pvAppSpecificData, byte[] pActivationInfo, string pwszProxyServer, ushort wProxyPort);
