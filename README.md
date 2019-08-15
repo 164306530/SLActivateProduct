@@ -152,7 +152,7 @@ LABEL_22:
 ```c
  hErrorcode = (void *)geterrercode((int)pSKUID, hslc, (int)&savedregs, 0, 0, ActivationInfo);
  ```
-以32位的10.0.18362.1为例,比如dll的入口地址为0x10000000,该函数的地址为0x1000A791,偏移量为0xA791.
+以32位的10.0.18362.1为例,比如dll的入口地址为0x10000000,该函数的地址为0x1002A791‬,偏移量为0x2A791.
 ```c#
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAppSpecificData, byte[] pvAppSpecificData, byte[] pActivationInfo, string pwszProxyServer, ushort wProxyPort);
@@ -165,7 +165,7 @@ private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAp
                         {
                             Console.WriteLine(Marshal.GetLastWin32Error());
                         }
-                        var pAddressHwidGetCurrentEx = hMod+0xA791;
+                        var pAddressHwidGetCurrentEx = hMod+0x2A791;
                         GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
                         var hErrorCode = GetErrerCodeFunc(hSLC, GuidSkuId.ToByteArray(), null, null, null, null, 0);
                         if (hErrorCode != 0)
