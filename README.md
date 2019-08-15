@@ -148,11 +148,11 @@ LABEL_22:
   return hSLpSetActivationInProgress;
 }
 ```
-主要就一处,只要从外部找到这个函数(因为不是输出函数,只能通过入口地址加偏移量定位),直接就可以调用这个函数获取错误代码:
+主要就一处,只要从外部找到这个函数(因为不是输出函数,只能通过基地址加函数入口地址的偏移量定位),直接就可以调用这个函数获取错误代码:
 ```c
  hErrorcode = (void *)geterrercode((int)pSKUID, hslc, (int)&savedregs, 0, 0, ActivationInfo);
  ```
-以32位的10.0.18362.1为例,比如dll的入口地址为55C20A70,该函数的地址为55C0A791,偏移量为162DF
+以32位的10.0.18362.1为例,比如dll的入口地址为0x58680000,该函数的地址为0x55C0A791,偏移量为0x2A7586F.
 ```c#
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAppSpecificData, byte[] pvAppSpecificData, byte[] pActivationInfo, string pwszProxyServer, ushort wProxyPort);
@@ -165,7 +165,7 @@ private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId, byte[] cbAp
                         {
                             Console.WriteLine(Marshal.GetLastWin32Error());
                         }
-                        var pAddressHwidGetCurrentEx = hMod + 0x162DF;
+                        var pAddressHwidGetCurrentEx = hMod-0x2A7586F;
                         GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pAddressHwidGetCurrentEx, typeof(GetErrerCode));
                         var hErrorCode = GetErrerCodeFunc(hSLC, GuidSkuId.ToByteArray(), null, null, null, null, 0);
                         if (hErrorCode != 0)
