@@ -301,3 +301,45 @@ errorcode = ::activateinfo((_DWORD *)pActivateinfo + 10, slc, (__int64)&Dst);
 .text:00007FF9B03D983A call    Get                             ; 第四层
 Get(v14, *(unsigned int *)(*(_QWORD *)(v4 + 88) + 12i64), (unsigned int)RESULTS, v16, v6);// 第四层
 ```c
+
+```c#
+ [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  IntPtr pActivationInfo);
+        
+                Guid GuidSkuId = new Guid(szActivationId);
+                IntPtr hSLC = new IntPtr();
+                int hResult = SLOpen(ref hSLC);
+                if (hResult == 0)
+                {
+                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
+                    if (hResult==0)
+                    {
+                        IntPtr pDll = LoadLibrary("sppcext.dll");
+                        if (pDll != IntPtr.Zero)
+                        {
+                            var hMod = GetModuleHandle("sppcext");
+                            if (hMod == IntPtr.Zero)
+                            {
+                                Console.WriteLine(Marshal.GetLastWin32Error());
+                            }
+                            var pGetResult = hMod + 0xA1D4;
+                            GetResult GetResultFunc = (GetResult)Marshal.GetDelegateForFunctionPointer(pGetResult, typeof(GetResult));
+                            SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
+                            IntPtr Values = Marshal.AllocHGlobal(128);
+                              var  hErrorCode = GetResultFunc(hSLC, GuidSkuId.ToByteArray(), Values);
+                                if (hErrorCode != 0)
+                                {
+                                    Console.WriteLine(hResult.ToString());
+                                }
+                                else
+                                {
+                                    Console.WriteLine("在线密钥");
+                                }
+                                bool hFree = FreeLibrary(pDll);
+                            Marshal.FreeHGlobal(Values);
+                        }
+                    }                   
+                    hResult = SLpClearActivationInProgress(hSLC, GuidSkuId.ToByteArray());
+                }
+            }
+```
