@@ -302,9 +302,10 @@ errorcode = ::activateinfo((_DWORD *)pActivateinfo + 10, slc, (__int64)&Dst);
 Get(v14, *(unsigned int *)(*(_QWORD *)(v4 + 88) + 12i64), (unsigned int)RESULTS, v16, v6);// 第四层
 ```c
 
+拿第二层的这个函数测试下:
 ```c#
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  IntPtr pActivationInfo);
+private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  byte[] pActivationInfo);
         
                 Guid GuidSkuId = new Guid(szActivationId);
                 IntPtr hSLC = new IntPtr();
@@ -324,21 +325,21 @@ private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  IntPtr pActiv
                             }
                             var pGetResult = hMod + 0xA1D4;
                             GetResult GetResultFunc = (GetResult)Marshal.GetDelegateForFunctionPointer(pGetResult, typeof(GetResult));
-                            IntPtr Values = Marshal.AllocHGlobal(128);
-                              var  hErrorCode = GetResultFunc(hSLC, GuidSkuId.ToByteArray(), Values);
+                            byte[] Activatinfo = new byte[64];
+                              var  hErrorCode = GetResultFunc(hSLC, GuidSkuId.ToByteArray(), Activatinfo);
                                 if (hErrorCode != 0)
                                 {
-                                    Console.WriteLine(hResult.ToString());
+                                    Console.WriteLine(hResult.ToString());   //打印输出结果
                                 }
                                 else
                                 {
                                     Console.WriteLine("在线密钥");
                                 }
                                 bool hFree = FreeLibrary(pDll);
-                            Marshal.FreeHGlobal(Values);
                         }
                     }                   
                     hResult = SLpClearActivationInProgress(hSLC, GuidSkuId.ToByteArray());
                 }
             }
 ```
+![image](https://github.com/laomms/SLActivateProduct/blob/master/debug.png)
