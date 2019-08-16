@@ -207,7 +207,7 @@ LABEL_22:
             public string pwszActivationObjectName;
         }
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
- private delegate int GetErrerCode(IntPtr hSLC, byte[] pProductSkuId,  IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
+ private delegate int GetErrerCode( byte[] pProductSkuId, IntPtr hSLC, IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
 //第三个参数具体不详,可能会引起内存写入异常
     RetID = PidGenX(Keys, pkeyfilePath, "XXXXX", 0, PID, DPID3, DPID4);
     if (RetID == 0)
@@ -235,7 +235,7 @@ LABEL_22:
                             var pGetErrerCode = hMod + 0x2A791;
                             GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pGetErrerCode, typeof(GetErrerCode));
                             IntPtr Values = Marshal.AllocHGlobal(128);
-                            var hErrorCode = GetErrerCodeFunc(hSLC, GuidSkuId.ToByteArray(), Values, 0, 0, pActInfo);
+                            var hErrorCode = GetErrerCodeFunc(GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
                             if (hErrorCode != 0)
                             {
                                 Console.WriteLine(hResult.ToString());
