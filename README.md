@@ -291,6 +291,18 @@ LABEL_22:
 errorcode = ::activateinfo((_DWORD *)pActivateinfo + 10, slc, (__int64)&Dst);
 偏移地址RVA=0x95D4
 
+.text:00007FF9A9E8978F loc_7FF9A9E8978F:                       ; CODE XREF: activateinfo+164↑j
+.text:00007FF9A9E8978F                                         ; activateinfo+195↑j
+.text:00007FF9A9E8978F mov     r8, [r13+18h]
+.text:00007FF9A9E89793 mov     rdx, [r13+20h]
+.text:00007FF9A9E89797 ; 142:   v11 = sub_7FF9B08E8668(v5);
+.text:00007FF9A9E89797
+.text:00007FF9A9E89797 loc_7FF9A9E89797:                       ; CODE XREF: activateinfo+1AB↑j
+.text:00007FF9A9E89797 mov     r9d, [rsp+140h+var_FC]
+.text:00007FF9A9E8979C mov     rcx, rbx
+.text:00007FF9A9E8979F mov     [rsp+140h+var_120], rdi
+.text:00007FF9A9E897A4 call    post                            ;通过POST获取错误代码
+
 .text:00007FF9B03D9829 loc_7FF9B03D9829:                       ; CODE XREF: activateinfo+21A↑j
 .text:00007FF9B03D9829 test    rax, rax
 .text:00007FF9B03D982C mov     r8d, r12d
