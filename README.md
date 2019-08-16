@@ -42,6 +42,18 @@ text:572CAFC1 push    [ebp+ActivationInfo]            ; ActivationInfo
 .text:572CA8AF push    eax
 .text:572CA8B0 call    GetResult                       ; 第三层
 .text:572CA8B5 mov     esi, eax
+
+.text:572CA125 push    [ebp+lpMem]                     ; int
+.text:572CA128 lea     edx, [esi+64h]
+.text:572CA12B push    [ebp+var_C]                     ; int
+.text:572CA12E push    eax                             ; psz
+.text:572CA12F push    ecx                             ; int
+.text:572CA130 push    edx                             ; int
+.text:572CA131 mov     ecx, esi
+.text:572CA133 call    GetRes                          ; 第四层
+.text:572CA138 mov     [esi+60h], eax
+.text:572CA13B ; 107:     sub_572C8E58(0);
+.text:572CA13B xor     ecx, ecx
 ```
 
 ```c
