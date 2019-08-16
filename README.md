@@ -275,6 +275,18 @@ LABEL_22:
   hResult = GetRes(SLC, SKUID, intptr);       // 第二层
   偏移地址RVA=0xA1D4
   
+ .text:00007FF9BE4CA24A ; 47:   res = VertifyKey(slc, pSKUID, 1, (_DWORD **)activateinfo, (__int64)&int128);
+.text:00007FF9BE4CA24A lea     rax, [rsp+130h+int128]
+.text:00007FF9BE4CA24F mov     r9, rsi
+.text:00007FF9BE4CA252 mov     r8d, 1
+.text:00007FF9BE4CA258 mov     [rsp+130h+var_110], rax
+.text:00007FF9BE4CA25D ; 44:   v5 = sub_7FF9BE4C45D0(v4);
+.text:00007FF9BE4CA25D mov     rdx, rdi
+.text:00007FF9BE4CA260 mov     rcx, r14
+.text:00007FF9BE4CA263 call    VertifyKey                      ; 调用SLpGetLicenseAcquisitionInfo,该函数必须返回0值
+  res = VertifyKey(slc, pSKUID, 1, (_DWORD **)activateinfo, (__int64)&int128);
+  
+...
   .text:00007FF9B03DA33C mov     rax, [rbp+30h+var_B0]
 .text:00007FF9B03DA340 lea     rcx, [rsi+28h]                  ; slc
 .text:00007FF9B03DA344 ; 76:       Dst = v19;
