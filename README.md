@@ -324,7 +324,6 @@ private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  IntPtr pActiv
                             }
                             var pGetResult = hMod + 0xA1D4;
                             GetResult GetResultFunc = (GetResult)Marshal.GetDelegateForFunctionPointer(pGetResult, typeof(GetResult));
-                            SL_ACTIVATION_INFO_HEADER pActInfo = new SL_ACTIVATION_INFO_HEADER();
                             IntPtr Values = Marshal.AllocHGlobal(128);
                               var  hErrorCode = GetResultFunc(hSLC, GuidSkuId.ToByteArray(), Values);
                                 if (hErrorCode != 0)
