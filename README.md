@@ -20,7 +20,29 @@ WINHTTP.DLL    WinHttpCrackUrl   WinHttpOpen inHttpGetDefaultProxyConfiguration 
 大致应该是这样(密钥激活过程):加密密钥及硬件等信息，利用httprequest post这些信息到指定网址,如果错误返回错误代码,如果正确返回合法licenseID. 将这些信息存储到SSL Store.Windows调用一系列算法如果该license对应的各种信息是合法就激活系统。
 
 经过拦截WinHttpOpen找到sppcext.dll中的调用加密密钥数据后调用httprequest的关键部分,这样可以不通过安装密钥的模式直接通过sppcext.dll获取错误代码.
+```asm
+.text:572CCD4B lea     eax, [ebp-0ACh]
+.text:572CCD51 mov     edx, esi                        ; pSKUId
+.text:572CCD53 push    eax                             ; ActivationInfo
+.text:572CCD54 mov     ecx, ebx                        ; hSLCs
+.text:572CCD56 call    GetEncryptKey                   ; 第一层
+.text:572CCD5B ; 232:         *(_DWORD *)Data = hGet;
+.text:572CCD5B mov     [ebp-70h], eax
 
+
+text:572CAFC1 push    [ebp+ActivationInfo]            ; ActivationInfo
+.text:572CAFC4 mov     edx, [ebp+pSKUID]               ; skuid
+.text:572CAFC7 mov     ecx, [ebp+hslc]                 ; hSlc
+.text:572CAFCA ; 51:       int_1 = 1;
+.text:572CAFCA mov     [ebp+int_1], 1
+.text:572CAFD1 call    geterrercode                    ; 第二层
+.text:572CAFD6 ; 53:       hSLpSetActivationInProgress = hErrorcode;
+.text:572CAFD6 mov     ebx, eax
+
+.text:572CA8AF push    eax
+.text:572CA8B0 call    GetResult                       ; 第三层
+.text:572CA8B5 mov     esi, eax
+```
 
 ```c
 void *__fastcall GetEncryptKey(int hSLCs, SLID *pSKUId, int ActivationInfo)
