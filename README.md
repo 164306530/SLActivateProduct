@@ -253,4 +253,48 @@ LABEL_22:
             }
         }
 
-```     
+```   
+
+64位dll:
+```asm
+.text:00007FF9B03DD380 lea     r8, [rsp+180h+ptr]              ; ptr
+.text:00007FF9B03DD385 mov     rdx, r14                        ; pProductSkuId
+.text:00007FF9B03DD388 mov     rcx, r15                        ; hSLC
+.text:00007FF9B03DD38B call    GetResult                       ; 第一层
+.text:00007FF9B03DD390 ; 290:       hrCode = hRes;
+.text:00007FF9B03DD390 mov     [rsp+180h+hrCode], eax
+ hRes = GetResult(hSLC, pProductSkuId, (__int64)&ptr);// 第一层
+ 
+ .text:00007FF9B03DAC43 mov     r8, r13                         ; activateinfo
+.text:00007FF9B03DAC46 ; 77:     v36 = 1;
+.text:00007FF9B03DAC46 mov     [rbp+arg_10], 1
+.text:00007FF9B03DAC4D mov     rdx, r14                        ; SKUID
+.text:00007FF9B03DAC50 mov     rcx, r15                        ; hSLC
+.text:00007FF9B03DAC53 call    GetRes                          ; 第二层
+  hResult = GetRes(SLC, SKUID, intptr);       // 第二层
+  
+  .text:00007FF9B03DA33C mov     rax, [rbp+30h+var_B0]
+.text:00007FF9B03DA340 lea     rcx, [rsi+28h]                  ; slc
+.text:00007FF9B03DA344 ; 76:       Dst = v19;
+.text:00007FF9B03DA344 mov     [rbp+30h+Dst], rax
+.text:00007FF9B03DA348 lea     r8, [rbp+30h+Dst]               ; a3
+.text:00007FF9B03DA34C mov     rax, [rbp+30h+var_A0]
+.text:00007FF9B03DA350 mov     rdx, r14                        ; skuid
+.text:00007FF9B03DA353 ; 77:       v27 = v20;
+.text:00007FF9B03DA353 mov     [rbp+30h+var_38], rax
+.text:00007FF9B03DA357 ; 78:       v28 = v21;
+.text:00007FF9B03DA357 mov     eax, [rbp+30h+var_98]
+.text:00007FF9B03DA35A mov     [rbp+30h+var_30], eax
+.text:00007FF9B03DA35D call    activateinfo                    ; 第三层
+errorcode = ::activateinfo((_DWORD *)pActivateinfo + 10, slc, (__int64)&Dst);
+
+.text:00007FF9B03D9829 loc_7FF9B03D9829:                       ; CODE XREF: activateinfo+21A↑j
+.text:00007FF9B03D9829 test    rax, rax
+.text:00007FF9B03D982C mov     r8d, r12d
+.text:00007FF9B03D982F ; 159:     if ( v17 )
+.text:00007FF9B03D982F cmovnz  r9, rax
+.text:00007FF9B03D9833 mov     rax, [r13+58h]
+.text:00007FF9B03D9837 mov     edx, [rax+0Ch]
+.text:00007FF9B03D983A call    Get                             ; 第四层
+Get(v14, *(unsigned int *)(*(_QWORD *)(v4 + 88) + 12i64), (unsigned int)RESULTS, v16, v6);// 第四层
+```c
