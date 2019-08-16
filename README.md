@@ -343,3 +343,4 @@ private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  byte[] pActiv
             }
 ```
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/debug.png)
+![image](https://github.com/laomms/SLActivateProduct/blob/master/debug2.png)
