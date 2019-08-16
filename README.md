@@ -264,6 +264,7 @@ LABEL_22:
 .text:00007FF9B03DD390 ; 290:       hrCode = hRes;
 .text:00007FF9B03DD390 mov     [rsp+180h+hrCode], eax
  hRes = GetResult(hSLC, pProductSkuId, (__int64)&ptr);// 第一层
+ 偏移地址RVA=0xAA4C
  
  .text:00007FF9B03DAC43 mov     r8, r13                         ; activateinfo
 .text:00007FF9B03DAC46 ; 77:     v36 = 1;
@@ -272,6 +273,7 @@ LABEL_22:
 .text:00007FF9B03DAC50 mov     rcx, r15                        ; hSLC
 .text:00007FF9B03DAC53 call    GetRes                          ; 第二层
   hResult = GetRes(SLC, SKUID, intptr);       // 第二层
+  偏移地址RVA=0xA1D4
   
   .text:00007FF9B03DA33C mov     rax, [rbp+30h+var_B0]
 .text:00007FF9B03DA340 lea     rcx, [rsi+28h]                  ; slc
@@ -287,6 +289,7 @@ LABEL_22:
 .text:00007FF9B03DA35A mov     [rbp+30h+var_30], eax
 .text:00007FF9B03DA35D call    activateinfo                    ; 第三层
 errorcode = ::activateinfo((_DWORD *)pActivateinfo + 10, slc, (__int64)&Dst);
+偏移地址RVA=0x95D4
 
 .text:00007FF9B03D9829 loc_7FF9B03D9829:                       ; CODE XREF: activateinfo+21A↑j
 .text:00007FF9B03D9829 test    rax, rax
