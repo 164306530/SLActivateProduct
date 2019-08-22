@@ -2,7 +2,7 @@
 
 看看激活过程系统做了些什么东西
 
-hResult = SLActivateProduct(hSLC, bSkuId, null, null, null, null, 0);
+hResult = SLActivateProduct(hSLC, ref bSkuId, null, null, null, null, 0);
 
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/00.png)
 ![image](https://github.com/laomms/SLActivateProduct/blob/master/33.png)
@@ -207,7 +207,7 @@ LABEL_22:
             public string pwszActivationObjectName;
         }
  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
- private delegate int GetErrerCode( byte[] pProductSkuId, IntPtr hSLC, IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
+ private delegate int GetErrerCode(ref SLID pProductSkuId, IntPtr hSLC, IntPtr unknown, int unk1, int unk2, SL_ACTIVATION_INFO_HEADER pActivationInfo);
 //第三个参数具体不详,可能会引起内存写入异常
     RetID = PidGenX(Keys, pkeyfilePath, "XXXXX", 0, PID, DPID3, DPID4);
     if (RetID == 0)
@@ -221,7 +221,7 @@ LABEL_22:
                 int hResult = SLOpen(ref hSLC);
                 if (hResult == 0)
                 {
-                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray()); //判断是否有其他激活进程
+                    hResult = SLpSetActivationInProgress( hSLC, ref GuidSkuId);
                     if (hResult==0)
                     {
                         IntPtr pDll = LoadLibrary("sppcext.dll");
@@ -235,7 +235,7 @@ LABEL_22:
                             var pGetErrerCode = hMod + 0x2A791;
                             GetErrerCode GetErrerCodeFunc = (GetErrerCode)Marshal.GetDelegateForFunctionPointer(pGetErrerCode, typeof(GetErrerCode));
                             IntPtr Values = Marshal.AllocHGlobal(128);
-                            var hErrorCode = GetErrerCodeFunc(GuidSkuId.ToByteArray(), hSLC, Values, 0, 0, pActInfo);
+                            var hErrorCode = GetErrerCodeFunc(ref GuidSkuId, hSLC,  Values, 0, 0, value);
                             if (hErrorCode != 0)
                             {
                                 Console.WriteLine(hResult.ToString());
@@ -343,15 +343,16 @@ Get(v14, *(unsigned int *)(*(_QWORD *)(v4 + 88) + 12i64), (unsigned int)RESULTS,
 
 拿第二层的这个函数测试下:
 ```c#
- [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  byte[] pActivationInfo);
+[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+private delegate int GetResult(IntPtr hSLC, ref SLID pProductSkuId,  byte[] pActivationInfo);
+
         
                 Guid GuidSkuId = new Guid(szActivationId);
                 IntPtr hSLC = new IntPtr();
                 int hResult = SLOpen(ref hSLC);
                 if (hResult == 0)
                 {
-                    hResult = SLpSetActivationInProgress( hSLC, GuidSkuId.ToByteArray());
+                    hResult = SLpSetActivationInProgress( hSLC, ref GuidSkuId);
                     if (hResult==0)
                     {
                         IntPtr pDll = LoadLibrary("sppcext.dll");
@@ -365,16 +366,16 @@ private delegate int GetResult(IntPtr hSLC, byte[] pProductSkuId,  byte[] pActiv
                             var pGetResult = hMod + 0xA1D4;
                             GetResult GetResultFunc = (GetResult)Marshal.GetDelegateForFunctionPointer(pGetResult, typeof(GetResult));
                             byte[] Activatinfo = new byte[64];
-                              var  hErrorCode = GetResultFunc(hSLC, GuidSkuId.ToByteArray(), Activatinfo);
-                                if (hErrorCode != 0)
-                                {
-                                    Console.WriteLine(hResult.ToString());   //打印输出结果
-                                }
-                                else
-                                {
-                                    Console.WriteLine("在线密钥");
-                                }
-                                bool hFree = FreeLibrary(pDll);
+                             var hErrorCode = GetResultFunc(hSLC, ref GuidSkuId, value);
+                            if (hErrorCode != 0)
+                            {
+                                Console.WriteLine(hResult.ToString());
+                            }
+                            else
+                            {
+                                Console.WriteLine("在线密钥");
+                            }
+                            bool hFree = FreeLibrary(pDll);
                         }
                     }                   
                     hResult = SLpClearActivationInProgress(hSLC, GuidSkuId.ToByteArray());
